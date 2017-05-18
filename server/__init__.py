@@ -14,7 +14,7 @@ import matplotlib.pyplot as plt
 
 from bs4 import BeautifulSoup
 from PIL import Image
-from wordcloud import WordCloud
+from wordcloud import WordCloud, ImageColorGenerator
 
 
 reload(sys)
@@ -91,12 +91,17 @@ def search():
     wl_space_split = " ".join(wordlist_after_jieba)
 
     # print wl_space_split
-    info_mask = np.array(Image.open(path.abspath('../static/img/cat.png')))
+    info_mask = np.array(Image.open(path.abspath('../static/img/f1.png')))
 
-    my_wordcloud = WordCloud(max_font_size=60, min_font_size=1,
-                             mask=info_mask, background_color="white").generate(wl_space_split)
+    image_color = ImageColorGenerator(info_mask)
 
-    my_wordcloud.to_file(path.abspath('../static/img/output.png'))
+    wc = WordCloud(max_font_size=60, min_font_size=1,
+                   mask=info_mask, background_color="white").generate(wl_space_split)
+
+    # 按照图片的颜色来显示
+    wc.recolor(color_func=image_color, random_state=3)
+
+    wc.to_file(path.abspath('../static/img/output.png'))
 
     return "Hello World"
 
