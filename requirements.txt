@@ -1,0 +1,6 @@
+Flask 
+requests
+jieba
+numpy
+beautifulsoup4
+wordcloud

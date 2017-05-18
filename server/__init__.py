@@ -72,7 +72,7 @@ def search():
     for ex in detail:
         str += filterWord(ex.get_text().strip('\n'))
 
-    with codecs.open('info.txt', 'w', 'utf-8') as f:
+    with codecs.open(path.abspath('server/info.txt'), 'w', 'utf-8') as f:
         f.write(str)
     f.close()
 
@@ -83,7 +83,7 @@ def search():
     # allowPOS 默认为空  不筛选
 
     # 读取文件
-    text = open(path.join(d, 'info.txt')).read()
+    text = open(path.abspath('server/info.txt')).read()
 
     # wordlist_after_jieba = jieba.analyse.extract_tags(text, topK=20,
     # withWeight=False, allowPOS=())     # 权重
@@ -91,7 +91,7 @@ def search():
     wl_space_split = " ".join(wordlist_after_jieba)
 
     # print wl_space_split
-    info_mask = np.array(Image.open(path.abspath('../static/img/f1.png')))
+    info_mask = np.array(Image.open(path.abspath('static/img/f1.png')))
 
     image_color = ImageColorGenerator(info_mask)
 
@@ -101,9 +101,7 @@ def search():
     # 按照图片的颜色来显示
     wc.recolor(color_func=image_color, random_state=3)
 
-    wc.to_file(path.abspath('../static/img/output.png'))
+    wc.to_file(path.abspath('static/img/output.png'))
 
     return "Hello World"
 
-if __name__ == "__main__":
-    app.run(port=1024, debug=True)
